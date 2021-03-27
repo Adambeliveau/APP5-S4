@@ -1,2 +1,2 @@
-Lecture de l'AST trouve : + + + + + 1010 1010 1010 1010 1010 1010
-Evaluation de l'AST trouve : 6060
+Lecture de l'AST trouve : 987654321 + 123456789
+Evaluation de l'AST trouve : 1111111110

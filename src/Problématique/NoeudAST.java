@@ -32,7 +32,7 @@ public class NoeudAST extends ElemAST {
   /** Lecture de noeud d'AST
    */
   public String LectAST( ) {
-     return terminal.chaine + " " + leftChild.LectAST() + " " + rightChild.LectAST();
+     return  leftChild.LectAST() + " " + terminal.chaine +  " " + rightChild.LectAST();
   }
 
 }

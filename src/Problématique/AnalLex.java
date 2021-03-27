@@ -34,54 +34,59 @@ public class AnalLex {
  */  
   public Terminal prochainTerminal( ) {
     String UL = "";
+    char currentChar;
     while(resteTerminal()){
-
-      switch (etat){
-        case 0: {
-          switch (chaine.charAt(ptrVect++)){
-            case '+' : return new Terminal("+");
-
-            case '0': {
-              etat = 1;
-              UL += '0';
-              break;
-            }
-            case '1': {
-              etat = 1;
-              UL += '1';
-              break;
-            }
-            default: {
-              ErreurLex("charactère indésirable (" + chaine.charAt(ptrVect - 1) + ") à l'état : " + etat);
-              break;
-            }
+      currentChar = chaine.charAt(ptrVect++);
+      switch (etat) {
+        case 0 : {
+          if (String.valueOf(currentChar).matches("[+\\-()*/]")) {
+            return new Terminal(String.valueOf(currentChar));
+          } else if (String.valueOf(currentChar).matches("[A-Z]")) {
+            etat = 1;
+            UL += currentChar;
+          } else if (String.valueOf(currentChar).matches("[0-9]")) {
+            etat = 3;
+            UL += currentChar;
+          } else {
+            ErreurLex("charactère indésirable (" + chaine.charAt(ptrVect - 1) + ") à l'état : " + etat);
           }
           break;
         }
-        case 1: {
-          switch (chaine.charAt(ptrVect++)){
-            case '0': {
-              etat = 1;
-              UL += '0';
-              break;
-            }
-            case '1': {
-              etat = 1;
-              UL += '1';
-              break;
-            }
-            default:
-            {
-              etat = 2;
-              break;
-            }
+        case 1 : {
+          if (String.valueOf(currentChar).matches("[A-Z|a-z]")) {
+            UL += currentChar;
+          }
+          if (String.valueOf(currentChar).equals("_")){
+            etat = 2;
+            UL += currentChar;
+          }
+          else {
+            ptrVect--;
+            etat = 0;
+            return new Terminal(UL);
           }
           break;
         }
-        case 2:{
-          ptrVect--;
-          etat = 0;
-          return new Terminal(UL);
+        case 2 : {
+          if(String.valueOf(currentChar).equals("_")){
+            ErreurLex("Doublons de '_'");
+          }
+          else if(String.valueOf(currentChar).matches("[A-Z|a-z]")){
+            etat = 1;
+            UL += currentChar;
+          }
+          break;
+        }
+        case 3 : {
+          if (String.valueOf(currentChar).matches("[0-9]")) {
+            UL += currentChar;
+          }
+          else {
+            ptrVect--;
+            etat = 0;
+            return new Terminal(UL);
+          }
+          break;
         }
       }
     }
