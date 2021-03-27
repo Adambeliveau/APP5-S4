@@ -24,26 +24,43 @@ public DescenteRecursive(String in) {
  */
 public ElemAST AnalSynt( ) {
   dernierTerminal = lexical.prochainTerminal();
-  return E();
+  return A();
 }
 
 
-private ElemAST E(){
-  ElemAST n1 = T();
+private ElemAST A(){
+  ElemAST n1 = B();
   Terminal op = null;
-  if (dernierTerminal.chaine.equals("+")){
+  if (dernierTerminal.chaine.equals("+") || dernierTerminal.chaine.equals("-")){
     op = dernierTerminal;
     dernierTerminal = lexical.prochainTerminal();
-    ElemAST n2 = E();
+    ElemAST n2 = A();
     n1 = new NoeudAST(op, n1, n2);
   }
   return n1;
 }
 
-private ElemAST T(){
+private ElemAST B(){
+  ElemAST n1 = C();
+  Terminal op = null;
+  if (dernierTerminal.chaine.equals("*") || dernierTerminal.chaine.equals("/")){
+    op = dernierTerminal;
+    dernierTerminal = lexical.prochainTerminal();
+    ElemAST n2 = B();
+    n1 = new NoeudAST(op, n1, n2);
+  }
+  return n1;
+}
+
+private ElemAST C(){
   ElemAST n = null;
-  if (!dernierTerminal.chaine.equals("+")){
+  if (!dernierTerminal.chaine.matches("[+\\-()*/]")){
     n = new FeuilleAST(dernierTerminal);
+    dernierTerminal = lexical.prochainTerminal();
+  }
+  else if(dernierTerminal.chaine.equals("(")){
+    dernierTerminal = lexical.prochainTerminal();
+    n = A();
     dernierTerminal = lexical.prochainTerminal();
   }
   else{

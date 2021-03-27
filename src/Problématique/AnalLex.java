@@ -25,7 +25,7 @@ public class AnalLex {
       true s'il reste encore au moins un terminal qui n'a pas ete retourne 
  */
   public boolean resteTerminal( ) {
-    return ptrVect != chaine.length();
+    return ptrVect < chaine.length();
   }
   
   
@@ -56,7 +56,10 @@ public class AnalLex {
           if (String.valueOf(currentChar).matches("[A-Z|a-z]")) {
             UL += currentChar;
           }
-          if (String.valueOf(currentChar).equals("_")){
+          else if (String.valueOf(currentChar).equals("_")){
+            if(!resteTerminal()){
+              ErreurLex("Caractère de fin('" + currentChar + "') invalide");
+            }
             etat = 2;
             UL += currentChar;
           }

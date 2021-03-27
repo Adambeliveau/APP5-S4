@@ -9,7 +9,7 @@ public abstract class ElemAST {
   
   /** Evaluation d'AST
    */
-  public abstract int EvalAST();
+  public abstract String EvalAST();
 
 
   /** Lecture d'AST

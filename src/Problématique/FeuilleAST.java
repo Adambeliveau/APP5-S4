@@ -18,8 +18,8 @@ public class FeuilleAST extends ElemAST {
 
   /** Evaluation de feuille d'AST
    */
-  public int EvalAST( ) {
-    return Integer.parseInt(LectAST());
+  public String EvalAST( ) {
+    return LectAST();
   }
 
 

@@ -1,2 +1,2 @@
-Lecture de l'AST trouve : 987654321 + 123456789
-Evaluation de l'AST trouve : 1111111110
+Lecture de l'AST trouve : Bonjour - X_EDA * 24 / 2 + 2 + Allo / X
+Evaluation de l'AST trouve : Bonjour - X_EDA * 6 + Allo / X
