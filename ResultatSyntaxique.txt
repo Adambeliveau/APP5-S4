@@ -1,0 +1,2 @@
+Lecture de l'AST trouve : + + + + + 1010 1010 1010 1010 1010 1010
+Evaluation de l'AST trouve : 6060
