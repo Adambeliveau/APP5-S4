@@ -26,7 +26,7 @@ public ElemAST AnalSynt( ) {
   dernierTerminal = lexical.prochainTerminal();
   ElemAST n = A();
   if (!dernierTerminal.chaine.equals("")){
-    ErreurSynt("traitement de la chaine incomplet");
+    ErreurSynt("Erreur: Traitement de la chaine " + lexical.chaine +  " incomplet");
   }
   return n;
 }
@@ -79,7 +79,7 @@ public ElemAST AnalSynt( ) {
       n = A();
       CheckSuiv("A");
       if (!dernierTerminal.chaine.equals(")")) {
-        ErreurSynt("Manque une parenthèse");
+        ErreurSynt("\nErreur: Manque une parenthèse à l'index: " + (lexical.ptrVect - 1) + " de " + lexical.chaine);
       }
       dernierTerminal = lexical.prochainTerminal();
     } else {
