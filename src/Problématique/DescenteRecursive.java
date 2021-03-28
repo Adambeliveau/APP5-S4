@@ -37,7 +37,7 @@ public ElemAST AnalSynt( ) {
       n1 = B();
       CheckSuiv("B");
     } else {
-      ErreurSynt("Erreur Pr('" + dernierTerminal.chaine + "')");
+      ErreurSynt("\nErreur: " + dernierTerminal.chaine +  " !inclue dans Pr(A) = {(, operande}.\n" + "Emplacement Erreur: index: " + (lexical.ptrVect-1) + " de " + lexical.chaine);
     }
     Terminal op = null;
     if (dernierTerminal.chaine.equals("+") || dernierTerminal.chaine.equals("-")) {
@@ -56,7 +56,7 @@ public ElemAST AnalSynt( ) {
       n1 = C();
       CheckSuiv("C");
     } else {
-      ErreurSynt("Erreur Pr('" + dernierTerminal.chaine + "')");
+      ErreurSynt("\nErreur: " + dernierTerminal.chaine +  " !inclue dans Pr(B) = {(, operande}.\n" + "Emplacement Erreur: index: " + (lexical.ptrVect-1) + " de " + lexical.chaine);
     }
     Terminal op = null;
     if (dernierTerminal.chaine.equals("*") || dernierTerminal.chaine.equals("/")) {
@@ -83,7 +83,7 @@ public ElemAST AnalSynt( ) {
       }
       dernierTerminal = lexical.prochainTerminal();
     } else {
-      ErreurSynt("Syntaxe incorrecte. Terminal fautif: " + dernierTerminal.chaine + " index: " + lexical.ptrVect);
+      ErreurSynt("\nErreur: " + dernierTerminal.chaine +  " !inclue dans Pr(C) = {(, operande}.\n" + "Emplacement Erreur: index: " + (lexical.ptrVect-1) + " de " + lexical.chaine);
     }
     return n;
   }
@@ -91,17 +91,17 @@ public ElemAST AnalSynt( ) {
 private void CheckSuiv(String rule){
   if(rule.equals("A")){
     if(!(dernierTerminal.chaine.equals(")") || dernierTerminal.chaine.equals(""))){
-      ErreurSynt(rule + " Erreur Suiv('" + dernierTerminal.chaine + "')");
+      ErreurSynt("\nErreur: " + dernierTerminal.chaine +  " !inclue dans Suiv(A) = {), $}.\n" + "Emplacement Erreur: index: " + (lexical.ptrVect-1) + " de " + lexical.chaine);
     }
   }
   if(rule.equals("B")){
     if(!(dernierTerminal.chaine.equals(")") || dernierTerminal.chaine.equals("+") || dernierTerminal.chaine.equals("-") || dernierTerminal.chaine.equals(""))){
-      ErreurSynt(rule + " Erreur Suiv('" + dernierTerminal.chaine + "')");
+      ErreurSynt("\nErreur: " + dernierTerminal.chaine +  " !inclue dans Suiv(B) = {), $, +, -}.\n" + "Emplacement Erreur: index: " + (lexical.ptrVect-1) + " de " + lexical.chaine);
     }
   }
   if(rule.equals("C")){
     if(!(dernierTerminal.chaine.equals(")") || dernierTerminal.chaine.equals("+") || dernierTerminal.chaine.equals("-") || dernierTerminal.chaine.equals("*") || dernierTerminal.chaine.equals("/") || dernierTerminal.chaine.equals(""))){
-      ErreurSynt(rule + " Erreur Suiv('" + dernierTerminal.chaine + "')");
+      ErreurSynt("\nErreur: " + dernierTerminal.chaine +  " !inclue dans Suiv(C) = {), $, +, -, *, /}.\n" + "Emplacement Erreur: index: " + (lexical.ptrVect-1) + " de " + lexical.chaine);
     }
   }
 }
