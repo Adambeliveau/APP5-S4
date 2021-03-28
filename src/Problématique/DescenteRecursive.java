@@ -24,52 +24,86 @@ public DescenteRecursive(String in) {
  */
 public ElemAST AnalSynt( ) {
   dernierTerminal = lexical.prochainTerminal();
-  return A();
-}
-
-
-private ElemAST A(){
-  ElemAST n1 = B();
-  Terminal op = null;
-  if (dernierTerminal.chaine.equals("+") || dernierTerminal.chaine.equals("-")){
-    op = dernierTerminal;
-    dernierTerminal = lexical.prochainTerminal();
-    ElemAST n2 = A();
-    n1 = new NoeudAST(op, n1, n2);
-  }
-  return n1;
-}
-
-private ElemAST B(){
-  ElemAST n1 = C();
-  Terminal op = null;
-  if (dernierTerminal.chaine.equals("*") || dernierTerminal.chaine.equals("/")){
-    op = dernierTerminal;
-    dernierTerminal = lexical.prochainTerminal();
-    ElemAST n2 = B();
-    n1 = new NoeudAST(op, n1, n2);
-  }
-  return n1;
-}
-
-private ElemAST C(){
-  ElemAST n = null;
-  if (!dernierTerminal.chaine.matches("[+\\-()*/]")){
-    n = new FeuilleAST(dernierTerminal);
-    dernierTerminal = lexical.prochainTerminal();
-  }
-  else if(dernierTerminal.chaine.equals("(")){
-    dernierTerminal = lexical.prochainTerminal();
-    n = A();
-    if(!dernierTerminal.chaine.equals(")")){
-      ErreurSynt("Manque une parenthèse");
-    }
-    dernierTerminal = lexical.prochainTerminal();
-  }
-  else{
-    ErreurSynt("Syntaxe incorrecte. Terminal fautif: " + dernierTerminal.chaine + " " + lexical.prochainTerminal().chaine);
+  ElemAST n = A();
+  if (!dernierTerminal.chaine.equals("")){
+    ErreurSynt("traitement de la chaine incomplet");
   }
   return n;
+}
+
+  private ElemAST A() {
+    ElemAST n1 = null;
+    if (dernierTerminal.chaine.equals("(") || !dernierTerminal.chaine.matches("[+\\-()*/]")) {
+      n1 = B();
+      CheckSuiv("B");
+    } else {
+      ErreurSynt("Erreur Pr('" + dernierTerminal.chaine + "')");
+    }
+    Terminal op = null;
+    if (dernierTerminal.chaine.equals("+") || dernierTerminal.chaine.equals("-")) {
+      op = dernierTerminal;
+      dernierTerminal = lexical.prochainTerminal();
+      ElemAST n2 = A();
+      CheckSuiv("A");
+      n1 = new NoeudAST(op, n1, n2);
+    }
+    return n1;
+  }
+
+  private ElemAST B() {
+    ElemAST n1 = null;
+    if (dernierTerminal.chaine.equals("(") || !dernierTerminal.chaine.matches("[+\\-()*/]")) {
+      n1 = C();
+      CheckSuiv("C");
+    } else {
+      ErreurSynt("Erreur Pr('" + dernierTerminal.chaine + "')");
+    }
+    Terminal op = null;
+    if (dernierTerminal.chaine.equals("*") || dernierTerminal.chaine.equals("/")) {
+      op = dernierTerminal;
+      dernierTerminal = lexical.prochainTerminal();
+      ElemAST n2 = B();
+      CheckSuiv("B");
+      n1 = new NoeudAST(op, n1, n2);
+    }
+    return n1;
+  }
+
+  private ElemAST C() {
+    ElemAST n = null;
+    if (!dernierTerminal.chaine.matches("[+\\-()*/]")) {
+      n = new FeuilleAST(dernierTerminal);
+      dernierTerminal = lexical.prochainTerminal();
+    } else if (dernierTerminal.chaine.equals("(")) {
+      dernierTerminal = lexical.prochainTerminal();
+      n = A();
+      CheckSuiv("A");
+      if (!dernierTerminal.chaine.equals(")")) {
+        ErreurSynt("Manque une parenthèse");
+      }
+      dernierTerminal = lexical.prochainTerminal();
+    } else {
+      ErreurSynt("Syntaxe incorrecte. Terminal fautif: " + dernierTerminal.chaine + " index: " + lexical.ptrVect);
+    }
+    return n;
+  }
+
+private void CheckSuiv(String rule){
+  if(rule.equals("A")){
+    if(!(dernierTerminal.chaine.equals(")") || dernierTerminal.chaine.equals(""))){
+      ErreurSynt(rule + " Erreur Suiv('" + dernierTerminal.chaine + "')");
+    }
+  }
+  if(rule.equals("B")){
+    if(!(dernierTerminal.chaine.equals(")") || dernierTerminal.chaine.equals("+") || dernierTerminal.chaine.equals("-") || dernierTerminal.chaine.equals(""))){
+      ErreurSynt(rule + " Erreur Suiv('" + dernierTerminal.chaine + "')");
+    }
+  }
+  if(rule.equals("C")){
+    if(!(dernierTerminal.chaine.equals(")") || dernierTerminal.chaine.equals("+") || dernierTerminal.chaine.equals("-") || dernierTerminal.chaine.equals("*") || dernierTerminal.chaine.equals("/") || dernierTerminal.chaine.equals(""))){
+      ErreurSynt(rule + " Erreur Suiv('" + dernierTerminal.chaine + "')");
+    }
+  }
 }
 
 
