@@ -61,6 +61,9 @@ private ElemAST C(){
   else if(dernierTerminal.chaine.equals("(")){
     dernierTerminal = lexical.prochainTerminal();
     n = A();
+    if(!dernierTerminal.chaine.equals(")")){
+      ErreurSynt("Manque une parenthèse");
+    }
     dernierTerminal = lexical.prochainTerminal();
   }
   else{
@@ -83,6 +86,7 @@ public void ErreurSynt(String s)
   //Methode principale a lancer pour tester l'analyseur syntaxique 
   public static void main(String[] args) {
     String toWriteLect = "";
+    String toWritePost = "";
     String toWriteEval = "";
 
     System.out.println("Debut d'analyse syntaxique");
@@ -96,9 +100,11 @@ public void ErreurSynt(String s)
       ElemAST RacineAST = dr.AnalSynt();
       toWriteLect += "Lecture de l'AST trouve : " + RacineAST.LectAST() + "\n";
       System.out.println(toWriteLect);
+      toWritePost += "Lecture de l'AST PostFix trouve : " + RacineAST.PostFix() + "\n";
+      System.out.println(toWritePost);
       toWriteEval += "Evaluation de l'AST trouve : " + RacineAST.EvalAST() + "\n";
       System.out.println(toWriteEval);
-      Writer w = new Writer(args[1],toWriteLect+toWriteEval); // Ecriture de toWrite dans fichier args[1]
+      Writer w = new Writer(args[1],toWriteLect+toWritePost+toWriteEval); // Ecriture de toWrite dans fichier args[1]
 
     } catch (Exception e) {
       System.out.println(e);

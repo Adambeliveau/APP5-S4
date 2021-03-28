@@ -29,4 +29,6 @@ public class FeuilleAST extends ElemAST {
     return terminal.chaine;
   }
 
+  public String PostFix() { return terminal.chaine; }
+
 }

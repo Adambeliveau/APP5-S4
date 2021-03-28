@@ -45,9 +45,12 @@ public class NoeudAST extends ElemAST {
   /** Lecture de noeud d'AST
    */
   public String LectAST( ) {
-     return rightChild.LectAST() + " " + terminal.chaine +  " " + leftChild.LectAST();
+      return "(" + rightChild.LectAST() + " " + terminal.chaine +  " " + leftChild.LectAST() + ")";
   }
 
+  public String PostFix(){
+      return leftChild.PostFix() +  " " + rightChild.PostFix() + " " + terminal.chaine;
+  }
 }
 
 
