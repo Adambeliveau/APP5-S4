@@ -48,7 +48,7 @@ public class AnalLex {
             etat = 3;
             UL += currentChar;
           } else {
-            ErreurLex("charactère indésirable (" + chaine.charAt(ptrVect - 1) + ") à l'état : " + etat);
+            ErreurLex("Erreur: charactère indésirable (" + chaine.charAt(ptrVect - 1) + ") à l'index " + (ptrVect - 1) + " de la chaine " + chaine);
           }
           break;
         }
@@ -58,7 +58,7 @@ public class AnalLex {
           }
           else if (String.valueOf(currentChar).equals("_")){
             if(!resteTerminal()){
-              ErreurLex("Caractère de fin('" + currentChar + "') invalide");
+              ErreurLex("Erreur: charactère indésirable (" + chaine.charAt(ptrVect - 1) + ") à l'index " + (ptrVect - 1) + " de la chaine " + chaine);
             }
             etat = 2;
             UL += currentChar;
@@ -72,11 +72,14 @@ public class AnalLex {
         }
         case 2 : {
           if(String.valueOf(currentChar).equals("_")){
-            ErreurLex("Doublons de '_'");
+            ErreurLex("Erreur: Doublons de '_' à l'index " + (ptrVect - 1) + " de la chaine " + chaine);
           }
           else if(String.valueOf(currentChar).matches("[A-Z|a-z]")){
             etat = 1;
             UL += currentChar;
+          }
+          else{
+            ErreurLex("Erreur: charactère indésirable (" + chaine.charAt(ptrVect - 2) + ") à l'index " + (ptrVect - 2) + " de la chaine " + chaine);
           }
           break;
         }
@@ -120,11 +123,40 @@ public class AnalLex {
     // Execution de l'analyseur lexical
     Terminal t = null;
     while(lexical.resteTerminal()){
-      t = lexical.prochainTerminal();
-      toWrite += t.chaine + "\n" ;  // toWrite contient le resultat d'analyse lexicale
+      try{
+        t = lexical.prochainTerminal();
+      }
+      catch(UnknownError e){
+        toWrite += e.getMessage() + "\n";
+        break;
+      }
+
+      toWrite += lexical.Beautifier(t.chaine) + "\n" ;  // toWrite contient le resultat d'analyse lexicale
     }
     System.out.println(toWrite); 	// Ecriture de toWrite sur la console
     Writer w = new Writer(args[1],toWrite); // Ecriture de toWrite dans fichier args[1]
     System.out.println("Fin d'analyse lexicale");
+  }
+
+  private String Beautifier(String UL){
+    try{
+      return "Nombre " + Integer.parseInt(UL);
+    }
+    catch(Exception e){
+      if(UL.matches("[+\\-()*/]")){
+        return switch (UL){
+          case "+" -> "Addition";
+          case "-" -> "Soustraction";
+          case "*" -> "Multiplication";
+          case "/" -> "Division";
+          case "(" -> "Parenthèse ouvrante";
+          case ")" -> "Parenthèse fermante";
+          default -> "What?";
+        };
+      }
+      else{
+        return "Identificateur " + UL;
+      }
+    }
   }
 }

@@ -26,7 +26,7 @@ public ElemAST AnalSynt( ) {
   dernierTerminal = lexical.prochainTerminal();
   ElemAST n = A();
   if (!dernierTerminal.chaine.equals("")){
-    ErreurSynt("Erreur: Traitement de la chaine " + lexical.chaine +  " incomplet");
+    ErreurSynt("\nErreur: Traitement de la chaine " + lexical.chaine +  " incomplet");
   }
   return n;
 }
