@@ -1,27 +1,9 @@
-Nombre 1
+Parenthèse ouvrante
+Identificateur U_x
 Addition
-Nombre 2
-Addition
-Nombre 3
-Addition
-Nombre 4
-Addition
-Nombre 5
-Addition
-Nombre 6
-Addition
-Nombre 7
-Addition
-Nombre 8
-Addition
-Nombre 9
-Addition
-Nombre 10
-Addition
-Nombre 11
-Addition
-Nombre 12
-Addition
-Nombre 13
-Addition
-Nombre 14
+Identificateur V_y
+Parenthèse fermante
+Multiplication
+Identificateur W_z
+Division
+Nombre 35

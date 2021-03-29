@@ -136,8 +136,14 @@ public void ErreurSynt(String s)
       System.out.println(toWriteLect);
       toWritePost += "Lecture de l'AST PostFix trouve : " + RacineAST.PostFix() + "\n";
       System.out.println(toWritePost);
-      toWriteEval += "Evaluation de l'AST trouve : " + RacineAST.EvalAST() + "\n";
-      System.out.println(toWriteEval);
+      try{
+        toWriteEval += "Evaluation de l'AST trouve : " + Integer.parseInt(RacineAST.EvalAST()) + "\n";
+        System.out.println(toWriteEval);
+      }
+      catch(Exception e){
+        toWriteEval += "Impossible d'évaluer l'AST, l'expression contient des variables.\nEvaluation de l'AST trouve : " + RacineAST.EvalAST() + "\n";
+        System.out.println(toWriteEval);
+      }
       Writer w = new Writer(args[1],toWriteLect+toWritePost+toWriteEval); // Ecriture de toWrite dans fichier args[1]
 
     } catch (Exception e) {
@@ -146,6 +152,8 @@ public void ErreurSynt(String s)
       System.exit(51);
     }
     System.out.println("Analyse syntaxique terminee");
+
+    
   }
 
 }
