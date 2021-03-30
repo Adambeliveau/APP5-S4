@@ -2,6 +2,8 @@ package Problématique;
 
 /** @author Ahmed Khoumsi */
 
+import java.util.Timer;
+
 /** Cette classe effectue l'analyse syntaxique
  */
 public class DescenteRecursive {
@@ -119,6 +121,7 @@ public void ErreurSynt(String s)
 
   //Methode principale a lancer pour tester l'analyseur syntaxique 
   public static void main(String[] args) {
+    long start = System.currentTimeMillis();
     String toWriteLect = "";
     String toWritePost = "";
     String toWriteEval = "";
@@ -146,14 +149,13 @@ public void ErreurSynt(String s)
       }
       Writer w = new Writer(args[1],toWriteLect+toWritePost+toWriteEval); // Ecriture de toWrite dans fichier args[1]
 
-    } catch (Exception e) {
-      System.out.println(e);
-      e.printStackTrace();
-      System.exit(51);
+    } catch (UnknownError e) {
+      System.out.println(e.getMessage());
     }
     System.out.println("Analyse syntaxique terminee");
+    long stop = System.currentTimeMillis();
+    System.out.println("Execution time: " + (stop-start));
 
-    
   }
 
 }

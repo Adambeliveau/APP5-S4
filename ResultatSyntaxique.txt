@@ -1,4 +1,3 @@
-Lecture de l'AST trouve : ((U_x + V_y) * (W_z / 35))
-Lecture de l'AST PostFix trouve : 35 W_z / V_y U_x + *
-Impossible d'évaluer l'AST, l'expression contient des variables.
-Evaluation de l'AST trouve : U_x + V_y * W_z / 35
+Lecture de l'AST trouve : (2 + (3 + 4))
+Lecture de l'AST PostFix trouve : 2 3 4 + +
+Evaluation de l'AST trouve : 9

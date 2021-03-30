@@ -12,7 +12,7 @@ public class NoeudAST extends ElemAST {
 
   /** Constructeur pour l'initialisation d'attributs
    */
-  public NoeudAST(Terminal terminal, ElemAST rightChild, ElemAST leftChild) {
+  public NoeudAST(Terminal terminal, ElemAST leftChild, ElemAST rightChild) {
     this.terminal = terminal;
     this.leftChild = leftChild;
     this.rightChild = rightChild;
@@ -24,18 +24,18 @@ public class NoeudAST extends ElemAST {
   public String EvalAST( ) {
     try{
       return switch (terminal.chaine) {
-        case "+" -> String.valueOf(Integer.parseInt(rightChild.EvalAST()) + Integer.parseInt(leftChild.EvalAST()));
-        case "-" -> String.valueOf(Integer.parseInt(rightChild.EvalAST()) - Integer.parseInt(leftChild.EvalAST()));
-        case "*" -> String.valueOf(Integer.parseInt(rightChild.EvalAST()) * Integer.parseInt(leftChild.EvalAST()));
-        case "/" -> String.valueOf(Integer.parseInt(rightChild.EvalAST()) / Integer.parseInt(leftChild.EvalAST()));
+        case "+" -> String.valueOf(Integer.parseInt(leftChild.EvalAST()) + Integer.parseInt(rightChild.EvalAST()));
+        case "-" -> String.valueOf(Integer.parseInt(leftChild.EvalAST()) - Integer.parseInt(rightChild.EvalAST()));
+        case "*" -> String.valueOf(Integer.parseInt(leftChild.EvalAST()) * Integer.parseInt(rightChild.EvalAST()));
+        case "/" -> String.valueOf(Integer.parseInt(leftChild.EvalAST()) / Integer.parseInt(rightChild.EvalAST()));
         default -> "-1";};
     }
     catch(Exception e){
       return switch (terminal.chaine) {
-        case "+" -> rightChild.EvalAST() + " + " + leftChild.EvalAST();
-        case "-" -> rightChild.EvalAST() + " - " + leftChild.EvalAST();
-        case "*" -> rightChild.EvalAST() + " * " + leftChild.EvalAST();
-        case "/" -> rightChild.EvalAST() + " / " +  leftChild.EvalAST();
+        case "+" -> leftChild.EvalAST() + " + " + rightChild.EvalAST();
+        case "-" -> leftChild.EvalAST() + " - " + rightChild.EvalAST();
+        case "*" -> leftChild.EvalAST() + " * " + rightChild.EvalAST();
+        case "/" -> leftChild.EvalAST() + " / " + rightChild.EvalAST();
         default -> "-1";};
     }
 
@@ -45,7 +45,7 @@ public class NoeudAST extends ElemAST {
   /** Lecture de noeud d'AST
    */
   public String LectAST( ) {
-      return "(" + rightChild.LectAST() + " " + terminal.chaine +  " " + leftChild.LectAST() + ")";
+      return "(" + leftChild.LectAST() + " " + terminal.chaine +  " " + rightChild.LectAST() + ")";
   }
 
   public String PostFix(){

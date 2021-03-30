@@ -4,6 +4,4 @@ Addition
 Identificateur V_y
 Parenthèse fermante
 Multiplication
-Identificateur W_z
-Division
-Nombre 35
+Erreur: Doublons de '_' à l'index 12 de la chaine (U_x+V_y)*W__z/35
